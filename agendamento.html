@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento</title>
+    <link rel="stylesheet" href="./style_agendamento.css">
+</head>
+
+<body>
+    <h1>Agendamento de Serviços</h1>
+    <label for="atendente">Escolha a Atendente:</label>
+    <select id="atendente" onchange="carregarHorarios()">
+        <option value="">Selecione...</option>
+    </select>
+
+    <label for="data">Escolha a Data:</label>
+    <input type="date" id="data" min="" onchange="carregarHorarios()">
+
+    <label for="horario">Escolha o Horário:</label>
+    <select id="horario">
+        <option value="">Selecione...</option>
+    </select>
+
+    <button onclick="confirmarAgendamento()">Confirmar Agendamento</button>
+    <button onclick="window.location.href='index.html'">Voltar</button>
+
+    <h2>Meu Agendamento</h2>
+    <p id="agendamentoInfo">Nenhum agendamento encontrado.</p>
+    <button onclick="alterarAgendamento()">Alterar Horário</button>
+    <button onclick="cancelarAgendamento()">Cancelar Agendamento</button>
+
+    <script>
+        // Verifica se o usuário está logado
+        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (!currentUser) {
+            alert("Por favor, faça login primeiro.");
+            window.location.href = 'index.html';  // Redireciona para a página de login
+        }
+
+        // Carrega a lista de atendentes
+        var users = JSON.parse(localStorage.getItem('users')) || [];
+        var atendentes = users.filter(user => user.tipo === "atendente");
+        var atendenteSelect = document.getElementById("atendente");
+
+        atendentes.forEach(atendente => {
+            var option = document.createElement("option");
+            option.value = atendente.username;
+            option.textContent = atendente.nomeCompleto;
+            atendenteSelect.appendChild(option);
+        });
+
+        // Define a data mínima para o campo de data, ou seja, a data atual
+        document.addEventListener("DOMContentLoaded", function () {
+            var hoje = new Date().toISOString().split("T")[0];
+            document.getElementById("data").setAttribute("min", hoje);
+        });
+
+        // Carregar os horários disponíveis
+        function carregarHorarios() {
+            var atendente = document.getElementById("atendente").value;
+            var data = document.getElementById("data").value;
+            var horarioSelect = document.getElementById("horario");
+            horarioSelect.innerHTML = '<option value="">Selecione...</option>';
+
+            if (!atendente || !data) return;
+
+            var hoje = new Date().toISOString().split("T")[0];
+            if (data < hoje) {
+                alert("Selecione uma data válida.");
+                document.getElementById("data").value = "";
+                return;
+            }
+
+            var horariosDisponiveis = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+            var agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
+            var agendamentosAtendente = agendamentos.filter(a => a.atendente === atendente && a.data === data);
+
+            agendamentosAtendente.forEach(a => {
+                var index = horariosDisponiveis.indexOf(a.horario);
+                if (index !== -1) {
+                    horariosDisponiveis.splice(index, 1);
+                }
+            });
+
+            horariosDisponiveis.forEach(h => {
+                var option = document.createElement("option");
+                option.value = h;
+                option.textContent = h;
+                horarioSelect.appendChild(option);
+            });
+        }
+
+        // Confirmar o agendamento
+        function confirmarAgendamento() {
+            var atendente = document.getElementById("atendente").value;
+            var data = document.getElementById("data").value;
+            var horario = document.getElementById("horario").value;
+
+            if (!atendente || !data || !horario) {
+                alert("Preencha todos os campos!");
+                return;
+            }
+
+            var agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
+            agendamentos.push({ username: currentUser.username, atendente, data, horario });
+            localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+            alert("Agendamento confirmado para " + data + " às " + horario);
+            exibirAgendamento();
+        }
+
+        // Exibir o agendamento do usuário logado
+        function exibirAgendamento() {
+            var agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
+            var agendamento = agendamentos.find(a => a.username === currentUser.username);  // Filtra pelo usuário logado
+
+            if (agendamento) {
+                document.getElementById("agendamentoInfo").textContent = `Atendente: ${agendamento.atendente} | Data: ${agendamento.data} | Horário: ${agendamento.horario}`;
+            }
+        }
+
+        // Alterar o horário do agendamento
+        function alterarAgendamento() {
+            var novoHorario = prompt("Informe o novo horário:");
+            if (!novoHorario) return;
+
+            var agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
+            var agendamento = agendamentos.find(a => a.username === currentUser.username);  // Filtra pelo usuário logado
+
+            if (agendamento) {
+                agendamento.horario = novoHorario;
+                localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+                alert("Horário alterado para " + novoHorario);
+                exibirAgendamento();
+            }
+        }
+
+        // Cancelar o agendamento
+        function cancelarAgendamento() {
+            if (confirm("Tem certeza que deseja cancelar o agendamento?")) {
+                var agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
+                agendamentos = agendamentos.filter(a => a.username !== currentUser.username);  // Remove o agendamento do usuário logado
+                localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+                alert("Agendamento cancelado.");
+                document.getElementById("agendamentoInfo").textContent = "Nenhum agendamento encontrado.";
+            }
+        }
+
+        // Chama a função para exibir o agendamento
+        exibirAgendamento();
+    </script>
+</body>
+
+</html>
