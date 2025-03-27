@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="./styles_login.css">
-
-    ">
+    <link rel="stylesheet" type="text/css" href="./styles_login.css"> <!-- Mantendo o CSS original -->
 </head>
 
 <body>
@@ -52,9 +50,11 @@
             if (usuarioValido) {
                 if (role === 'cliente' && usuarioValido.tipo === 'cliente') {
                     alert("Login como Cliente bem-sucedido!");
+                    localStorage.setItem('currentUser', JSON.stringify(usuarioValido));  // Salva o usuário logado
                     window.location.href = 'agendamento.html';  // Redirecionar para a página do cliente
                 } else if (role === 'atendente' && usuarioValido.tipo === 'atendente') {
                     alert("Login como Atendente bem-sucedido!");
+                    localStorage.setItem('currentUser', JSON.stringify(usuarioValido));  // Salva o usuário logado
                     window.location.href = 'checkin.html';  // Redirecionar para a página do atendente
                 } else {
                     document.getElementById("mensagemErro").innerText = "Perfil selecionado não corresponde ao tipo de usuário.";

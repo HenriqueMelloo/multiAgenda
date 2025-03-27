@@ -83,7 +83,7 @@
                 var tipoUsuario = user.tipo === "atendente" ? "Atendente" : "Cliente"; // Exibe "Atendente" ou "Cliente"
                 return [user.nomeCompleto, user.dataNascimento, user.username, user.email, user.numeroContato, tipoUsuario, '******'];
             });
-            var ws = XLSX.utils.aoa_to_sheet([ 
+            var ws = XLSX.utils.aoa_to_sheet([
                 ["Nome Completo", "Data de Nascimento", "Username", "Email", "Número de Contato", "Tipo de Usuário", "Senha"]
             ].concat(ws_data));
             wb.Sheets["Usuários"] = ws;
