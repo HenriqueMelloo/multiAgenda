@@ -11,13 +11,14 @@ body {
 h1 {
     text-align: center;
     margin-top: 20px;
-    color: #333;
+    color: #C2185B;  /* Cor rosa bebê */
 }
 
 label {
     font-weight: bold;
     margin-top: 10px;
     display: block;
+    color: #C2185B;  /* Cor rosa bebê */
 }
 
 select, input {
@@ -25,14 +26,15 @@ select, input {
     max-width: 300px;
     padding: 8px;
     margin: 5px 0 15px 0;
-    border: 1px solid #ccc;
+    border: 1px solid #F06292;  /* Borda em tom de rosa */
     border-radius: 4px;
     box-sizing: border-box;
+    background: #FCE4EC;  /* Cor de fundo suave rosa bebê */
 }
 
 button {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #E91E63;  /* Botão em tom de rosa forte */
     color: white;
     border: none;
     border-radius: 4px;
@@ -42,7 +44,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #C2185B;  /* Cor mais escura no hover */
 }
 
 #agendamentoInfo {
