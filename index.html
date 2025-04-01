@@ -1,51 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="./styles_login.css">
+
 </head>
 
 <body>
-    <div class="container">
-        <!-- Coluna 1: Logo da empresa -->
-        <div class="column-left">
-            <img src="./imagem1.png" alt="Imagem 1" class="imagem1">
-        </div>
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" required><br>
 
-        <!-- Coluna 2: Formulário de Login e Links -->
-        <div class="column-right">
-            <h1>Login</h1>
-            <form id="loginForm">
-                <label for="username">Username:</label>
-                <input type="text" id="username" required><br>
+        <label for="password">Senha:</label>
+        <input type="password" id="password" required><br>
 
-                <label for="password">Senha:</label>
-                <input type="password" id="password" required><br>
+        <label for="role">Escolha seu perfil:</label><br>
+        <input type="radio" id="cliente" name="role" value="cliente" required>
+        <label for="cliente">Cliente</label><br>
+        <input type="radio" id="atendente" name="role" value="atendente" required>
+        <label for="atendente">Atendente</label><br>
 
-                <label for="role">Escolha seu perfil:</label>
-                <div class="radio-group">
-                    <input type="radio" id="cliente" name="role" value="cliente" required>
-                    <label for="cliente">Cliente</label>
+        <button type="submit">Entrar</button>
+    </form>
 
-                    <input type="radio" id="atendente" name="role" value="atendente" required>
-                    <label for="atendente">Atendente</label>
-                </div>
+    <a href="./cadastro.html">Ainda não tem uma conta? Cadastre-se</a><br>
+    <a href="./recuperar_senha.html">Esqueceu sua senha?</a>
+    <!-- Link corrigido para a página de recuperação de senha -->
 
-                <button type="submit">Entrar</button>
-            </form>
-
-            <!-- Links de cadastro e recuperação de senha -->
-            <div class="links-container">
-                <a href="./cadastro.html">Ainda não tem uma conta? Cadastre-se</a><br>
-                <a href="./recuperar_senha.html">Esqueceu sua senha?</a>
-            </div>
-
-            <div id="mensagemErro"></div>
-        </div>
-    </div>
+    <div id="mensagemErro"></div>
 
     <script>
         var users = JSON.parse(localStorage.getItem('users')) || []; // Recuperando usuários do localStorage
@@ -65,11 +51,9 @@
             if (usuarioValido) {
                 if (role === 'cliente' && usuarioValido.tipo === 'cliente') {
                     alert("Login como Cliente bem-sucedido!");
-                    localStorage.setItem('currentUser', JSON.stringify(usuarioValido));  // Salva o usuário logado
                     window.location.href = 'agendamento.html';  // Redirecionar para a página do cliente
                 } else if (role === 'atendente' && usuarioValido.tipo === 'atendente') {
                     alert("Login como Atendente bem-sucedido!");
-                    localStorage.setItem('currentUser', JSON.stringify(usuarioValido));  // Salva o usuário logado
                     window.location.href = 'checkin.html';  // Redirecionar para a página do atendente
                 } else {
                     document.getElementById("mensagemErro").innerText = "Perfil selecionado não corresponde ao tipo de usuário.";
@@ -83,4 +67,3 @@
 </body>
 
 </html>
-
