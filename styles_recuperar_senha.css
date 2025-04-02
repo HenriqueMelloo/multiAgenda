@@ -2,12 +2,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom right, #1c1c2b, #293149);
+    background-color: #f8bbd0;
+    /* Cor sólida rosa bebê */
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #C2185B;
+    /* Rosa bebê */
 }
 
 form {
@@ -22,7 +24,8 @@ form {
 label {
     display: block;
     margin-bottom: 5px;
-    color: #666;
+    color: #C2185B;
+    /* Rosa bebê */
 }
 
 input[type="text"],
@@ -31,7 +34,8 @@ input[type="date"] {
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #F06292;
+    /* Bordas em tom de rosa claro */
     border-radius: 5px;
     box-sizing: border-box;
 }
@@ -39,7 +43,8 @@ input[type="date"] {
 button[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #E91E63;
+    /* Rosa forte */
     color: white;
     border: none;
     border-radius: 5px;
@@ -48,19 +53,22 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #C2185B;
+    /* Rosa escuro ao passar o mouse */
 }
 
 a {
     display: block;
     text-align: center;
     margin-top: 10px;
-    color: #666;
+    color: #C2185B;
+    /* Rosa bebê */
     text-decoration: none;
 }
 
 a:hover {
-    color: #333;
+    color: #E91E63;
+    /* Rosa forte ao passar o mouse */
 }
 
 #mensagemErro {
@@ -70,8 +78,10 @@ a:hover {
 }
 
 #senhaRecuperada {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    background-color: #f8bbd0;
+    /* Rosa suave para o fundo */
+    border: 1px solid #F06292;
+    /* Bordas em tom de rosa claro */
     border-radius: 5px;
     padding: 10px;
     margin-top: 20px;
@@ -79,12 +89,14 @@ a:hover {
 }
 
 #senhaRecuperada h2 {
-    color: #333;
+    color: #C2185B;
+    /* Rosa bebê */
     margin-bottom: 10px;
 }
 
 #senha {
-    color: #333;
+    color: #C2185B;
+    /* Rosa bebê */
     font-size: 18px;
     font-weight: bold;
 }
